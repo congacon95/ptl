@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="PTL.View.Components.TextBox_Info"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+						 xmlns:Components="clr-namespace:PTL.View.Components"
+						 mc:Ignorable="d"
+						 x:Name="Main"
+						 d:DesignHeight="32"
+						 d:DesignWidth="360">
+	<Grid>
+		<Grid.Resources>
+			<Style BasedOn="{StaticResource chb_switch}"
+						 TargetType="{x:Type CheckBox}">
+			</Style>
+		</Grid.Resources>
+		<CheckBox Content="{Binding Text, ElementName=Main}"
+							x:Name="chb_text"
+							IsChecked="{Binding B, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+		<Components:TextBoxs Effect="{Binding Effect, ElementName=chb_text}"
+												 Foreground="{Binding Foreground, ElementName=chb_text}"
+												 Value="{Binding V, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+		</Components:TextBoxs>
+	</Grid>
+</UserControl>

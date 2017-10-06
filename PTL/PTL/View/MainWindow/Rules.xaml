@@ -1,0 +1,217 @@
+﻿<UserControl x:Class="PTL.View.MainWindow.Rules"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+						 xmlns:local="clr-namespace:PTL.View.MainWindow"
+						 xmlns:View="clr-namespace:PTL.View.Components"
+						 mc:Ignorable="d"
+						 d:DesignHeight="1200"
+						 Width="350">
+	<StackPanel>
+		<ListView  x:Name="listviewRules"
+							 x:FieldModifier="public"
+							 Height="215"
+							 Style="{StaticResource lv_Rules}"
+							 SelectedItem="{Binding r.Rule, Mode=TwoWay}"
+							 ItemsSource="{Binding r.Rules}"
+							 HorizontalAlignment="Left"
+							 ScrollViewer.VerticalScrollBarVisibility="Auto"
+							 ScrollViewer.HorizontalScrollBarVisibility="Auto">
+			<ListView.Resources>
+				<Style BasedOn="{StaticResource tb_content}"
+							 TargetType="{x:Type TextBlock}">
+					<Setter Property="FontSize"
+									Value="12"></Setter>
+					<Setter Property="Height"
+									Value="auto" />
+					<Setter Property="Margin"
+									Value="0" />
+					<Setter Property="HorizontalAlignment"
+									Value="Left" />
+					<Setter Property="TextAlignment"
+									Value="Left" />
+					<Setter Property="TextWrapping"
+									Value="NoWrap" />
+				</Style>
+			</ListView.Resources>
+			<ListView.View>
+				<GridView>
+					<GridViewColumn Header="Title"
+													Width="120"
+													DisplayMemberBinding="{Binding Title.V}" />
+					<GridViewColumn Header="Class"
+													Width="120"
+													DisplayMemberBinding="{Binding Class.V}" />
+					<GridViewColumn Header="File Name"
+													Width="120"
+													DisplayMemberBinding="{Binding Process.V}" />
+					<!--<GridViewColumn Header="Title"
+													DisplayMemberBinding="{Binding Top.V}" />
+					<GridViewColumn Header="Border"
+													DisplayMemberBinding="{Binding Border.V}" />
+					<GridViewColumn Header="Bottom"
+													DisplayMemberBinding="{Binding Bottom.V}" />
+					<GridViewColumn Header="Left"
+													DisplayMemberBinding="{Binding Relative.V.Left}" />
+					<GridViewColumn Header="Top"
+													DisplayMemberBinding="{Binding Relative.V.Top}" />
+					<GridViewColumn Header="Width"
+													DisplayMemberBinding="{Binding Relative.V.Width}" />
+					<GridViewColumn Header="Height"
+													DisplayMemberBinding="{Binding Relative.V.Height}" />
+					<GridViewColumn Header="_Left"
+													DisplayMemberBinding="{Binding State.V.Left}" />
+					<GridViewColumn Header="_Top"
+													DisplayMemberBinding="{Binding State.V.Top}" />
+					<GridViewColumn Header="_Width"
+													DisplayMemberBinding="{Binding State.V.Width}" />
+					<GridViewColumn Header="_Height"
+													DisplayMemberBinding="{Binding State.V.Height}" />-->
+				</GridView>
+			</ListView.View>
+		</ListView>
+		<DockPanel VerticalAlignment="Bottom"
+							 LastChildFill="False">
+			<DockPanel.Resources>
+				<Style TargetType="{x:Type Button}"
+							 BasedOn="{StaticResource btn_trigger}"></Style>
+			</DockPanel.Resources>
+			<Button ToolTip="Top"
+							Command="{Binding r.TOP}"
+							Template="{StaticResource btn_Top}"></Button>
+			<Button ToolTip="Bottom"
+							Command="{Binding r.BOTTOM}"
+							Template="{StaticResource btn_Bottom}">
+			</Button>
+			<Button ToolTip="Down"
+							Command="{Binding r.DOWN}"
+							Template="{StaticResource btn_down}">
+			</Button>
+			<Button ToolTip="Up"
+							Command="{Binding r.UP}"
+							Template="{StaticResource btn_Up}"></Button>
+			<Button Command="{Binding r.ADD}"
+							DockPanel.Dock="Right"
+							Template="{StaticResource btn_Add}"
+							ToolTip="Add New Rule"></Button>
+			<Button ToolTip="Delete Rule"
+							DockPanel.Dock="Right"
+							Command="{Binding r.DELETE}"
+							Template="{StaticResource btn_Remove}"></Button>
+		</DockPanel>
+		<StackPanel x:Name="spn_RuleInfo">
+			<ToggleButton x:Name="chb_conditions"
+										IsChecked="True"
+										Content="CONDITIONS"></ToggleButton>
+			<Border>
+				<StackPanel Visibility="{Binding IsChecked, ElementName=chb_conditions, Converter={StaticResource b2v}}">
+					<View:TextBox_Info Text="Title:"
+														 DataContext="{Binding r.Rule.Title}"></View:TextBox_Info>
+					<View:TextBox_Info Text="Class:"
+														 DataContext="{Binding r.Rule.Class}"></View:TextBox_Info>
+					<View:TextBox_Info Text="Name:"
+														 DataContext="{Binding r.Rule.Process}"></View:TextBox_Info>
+				</StackPanel>
+			</Border>
+			<ToggleButton x:Name="chb_actions"
+										IsChecked="True"
+										Content="ACTIONS"></ToggleButton>
+			<Border>
+				<StackPanel Visibility="{Binding IsChecked, ElementName=chb_actions, Converter={StaticResource b2v}}">
+					<CheckBox Content="Ignore          (No move or resize)"
+										IsChecked="{Binding r.Rule.IsIgnore}" />
+					<CheckBox Content="Move only    (No resize)"
+										DockPanel.Dock="Right"
+										IsChecked="{Binding r.Rule.IsNoResize}" />
+					<StackPanel>
+						<StackPanel.Resources>
+							<Style x:Key="sld_value"
+										 TargetType="{x:Type View:Slider_Value}">
+								<Setter Property="Width"
+												Value="295"></Setter>
+								<Setter Property="Minimum"
+												Value="-50"></Setter>
+								<Setter Property="MaxHeight"
+												Value="50"></Setter>
+								<Setter Property="HorizontalAlignment"
+												Value="Left"></Setter>
+							</Style>
+						</StackPanel.Resources>
+						<Grid>
+							<CheckBox x:Name="chb_top"
+												IsChecked="{Binding r.Rule.Top.B}" />
+							<View:Slider_Value Text="Title:"
+																 Style="{StaticResource sld_value}"
+																 Value="{Binding r.Rule.Top.V, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+																 Effect="{Binding Effect, ElementName=chb_top}"
+																 Foreground="{Binding Foreground, ElementName=chb_top}"></View:Slider_Value>
+						</Grid>
+						<Grid>
+							<CheckBox x:Name="chb_Border"
+												IsChecked="{Binding r.Rule.Border.B}" />
+							<View:Slider_Value Text="Border:"
+																 Style="{StaticResource sld_value}"
+																 Value="{Binding r.Rule.Border.V, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+																 Effect="{Binding Effect, ElementName=chb_Border}"
+																 Foreground="{Binding Foreground, ElementName=chb_Border}"></View:Slider_Value>
+						</Grid>
+						<Grid>
+							<CheckBox x:Name="chb_bottom"
+												IsChecked="{Binding r.Rule.Bottom.B}" />
+							<View:Slider_Value Text="Bottom:"
+																 Style="{StaticResource sld_value}"
+																 Value="{Binding r.Rule.Bottom.V, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+																 Effect="{Binding Effect, ElementName=chb_bottom}"
+																 Foreground="{Binding Foreground, ElementName=chb_bottom}"></View:Slider_Value>
+						</Grid>
+					</StackPanel>
+					<CheckBox IsChecked="{Binding r.Rule._State.B}"
+										x:Name="chb__State"
+										Content="Relative Position and Size:" />
+					<StackPanel Effect="{Binding Effect, ElementName=chb__State}"
+											DataContext="{Binding r.Rule._State}">
+						<View:Slider_Value Text="Left:"
+															 Value="{Binding V.Left, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+															 Foreground="{Binding Foreground, ElementName=chb__State}"></View:Slider_Value>
+						<View:Slider_Value Text="Top:"
+															 Value="{Binding V.Top, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+															 Foreground="{Binding Foreground, ElementName=chb__State}"></View:Slider_Value>
+						<View:Slider_Value Text="Width:"
+															 Value="{Binding V.Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+															 Foreground="{Binding Foreground, ElementName=chb__State}"></View:Slider_Value>
+						<View:Slider_Value Text="Height:"
+															 Value="{Binding V.Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+															 Foreground="{Binding Foreground, ElementName=chb__State}"></View:Slider_Value>
+					</StackPanel>
+					<CheckBox Content="Real Position and Size:"
+										x:Name="chb_State"
+										IsChecked="{Binding r.Rule.State.B}" />
+					<StackPanel Effect="{Binding Effect, ElementName=chb_State}"
+											DataContext="{Binding r.Rule.State}">
+						<View:Slider_Value Text="Left:"
+															 Value="{Binding V.Left, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+															 Maximum="{Binding Bound.Right}"
+															 Minimum="{Binding Bound.Left}"
+															 Foreground="{Binding Foreground, ElementName=chb_State}"></View:Slider_Value>
+						<View:Slider_Value Text="Top:"
+															 Value="{Binding V.Top, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+															 Maximum="{Binding Bound.Bottom}"
+															 Minimum="{Binding Bound.Top}"
+															 Foreground="{Binding Foreground, ElementName=chb_State}"></View:Slider_Value>
+						<View:Slider_Value Text="Width:"
+															 Value="{Binding V.Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+															 Maximum="{Binding Bound.Width}"
+															 Minimum="0"
+															 Foreground="{Binding Foreground, ElementName=chb_State}"></View:Slider_Value>
+						<View:Slider_Value Text="Height:"
+															 Value="{Binding V.Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+															 Maximum="{Binding Bound.Height}"
+															 Minimum="0"
+															 Foreground="{Binding Foreground, ElementName=chb_State}"></View:Slider_Value>
+					</StackPanel>
+				</StackPanel>
+			</Border>
+		</StackPanel>
+	</StackPanel>
+</UserControl>

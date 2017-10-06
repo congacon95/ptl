@@ -1,0 +1,32 @@
+﻿<Window x:Class="PTL.View.ConfirmWindow"
+				xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:local="clr-namespace:PTL.View"
+				mc:Ignorable="d"
+				Title="ConfirmForm"
+				Width="120"
+				Height="70"
+				Left="0"
+				Top="0"
+				Icon="/PTL;component/Resources/NotifyIcon_On.ico"
+				AllowsTransparency="True"
+				ShowInTaskbar="False"
+				WindowStyle="None"
+				Background="Transparent">
+	<Window.Resources></Window.Resources>
+	<Grid Margin="10">
+		<Button Name="btnNo"
+						Click="btnYes_Click"
+						HorizontalAlignment="Left"
+						Foreground="Black"
+						Background="{StaticResource roundRed2}"
+						Style="{StaticResource ConfirmFormButton}">No</Button>
+		<Button Name="btnYes"
+						Click="btnYes_Click"
+						HorizontalAlignment="Right"
+						Style="{StaticResource ConfirmFormButton}"
+						Content="Yes"></Button>
+	</Grid>
+</Window>

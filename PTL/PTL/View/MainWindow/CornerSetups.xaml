@@ -1,0 +1,242 @@
+﻿<UserControl x:Class="PTL.View.MainWindow.CornerSetups"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+						 xmlns:local="clr-namespace:PTL.View.MainWindow"
+						 xmlns:View="clr-namespace:PTL.View.Components"
+						 xmlns:system="clr-namespace:System;assembly=mscorlib"
+						 mc:Ignorable="d"
+						 x:Name="Main"
+						 d:DesignHeight="1000"
+						 Width="350">
+	<StackPanel Width="{Binding Width, ElementName=Main}">
+		<StackPanel.Resources>
+			<Style TargetType="{x:Type Button}"
+						 BasedOn="{StaticResource btn_trigger}"></Style>
+			<Style TargetType="{x:Type TextBlock}"
+						 BasedOn="{StaticResource tb_content}">
+				<Setter Property="Width"
+								Value="60"></Setter>
+				<Setter Property="MinWidth"
+								Value="0" />
+			</Style>
+		</StackPanel.Resources>
+		<ToggleButton x:Name="chb_features"
+									IsChecked="False"
+									Content="FEATURES"></ToggleButton>
+		<Border>
+			<StackPanel Visibility="{Binding IsChecked, ElementName=chb_features, Converter={StaticResource b2v},FallbackValue=true}">
+				<CheckBox IsChecked="{Binding st.IsMergeScreen}"
+									Content="{Binding l.IsMergeScreen, FallbackValue='Merge multiple displays into one'}"></CheckBox>
+				<CheckBox IsChecked="{Binding st.IsMoveToCursor}"
+									Content="{Binding l.IsMoveToCursor, FallbackValue='Move window to focus display'}"></CheckBox>
+				<CheckBox IsChecked="{Binding st.IsMoveToCursorKeep_State}"
+									Content="{Binding l.IsMoveToCursorKeep_State, FallbackValue='Keep Relative state and position'}"></CheckBox>
+				<CheckBox IsChecked="{Binding st.IsMoveToCursor_Taskbar}"
+									Content="{Binding l.IsMoveToCursor_Taskbar, FallbackValue='Place 1/3 width window properly'}"></CheckBox>
+				<CheckBox IsChecked="{Binding st.IsFormat}"
+									Content="{Binding l.IsFormat, FallbackValue='Format new window into the grid'}"></CheckBox>
+			</StackPanel>
+		</Border>
+		<Canvas x:Name="cv"
+						Width="{Binding Width, ElementName=Main}"
+						Height="250">
+			<Canvas.Resources>
+				<Style TargetType="{x:Type CheckBox}"
+							 BasedOn="{StaticResource btn_demo_screen}"></Style>
+			</Canvas.Resources>
+		</Canvas>
+		<DockPanel>
+			<Button x:Name="btn_add"
+							Click="add_setup"
+							DockPanel.Dock="Right"
+							Template="{StaticResource btn_Add}"
+							ToolTip="Add new corner setup"></Button>
+			<Button x:Name="btn_remove"
+							DockPanel.Dock="Right"
+							Click="remove_setup"
+							Template="{StaticResource btn_Remove}"
+							ToolTip="Delete selected setup"></Button>
+			<ComboBox x:Name="cbb_setups"
+								SelectionChanged="setup_changed">
+			</ComboBox>
+		</DockPanel>
+		<TextBox x:Name="tb_setup_name"
+						 TextChanged="setup_name_changed"
+						 ToolTip="Unique setup name"
+						 BorderBrush="{Binding Foreground, ElementName=tb_setup_name}"
+						 Text="{Binding cs.Setup.Name}"></TextBox>
+		<Border>
+			<StackPanel Visibility="Visible"
+									ToolTip="Screen corner side parts"
+									x:Name="spn_add_setup">
+				<StackPanel.Resources>
+					<Style TargetType="{x:Type View:Slider_Value}">
+						<Setter Property="Maximum"
+										Value="12"></Setter>
+						<Setter Property="Minimum"
+										Value="1"></Setter>
+						<Setter Property="Value"
+										Value="3"></Setter>
+						<Setter Property="Foreground"
+										Value="{Binding Foreground, ElementName=btn_add_new_setup}"></Setter>
+					</Style>
+				</StackPanel.Resources>
+				<View:Slider_Value Text="Left:"
+													 x:Name="sl_Left"></View:Slider_Value>
+				<View:Slider_Value Text="Top:"
+													 x:Name="sl_Top"></View:Slider_Value>
+				<View:Slider_Value Text="Right:"
+													 x:Name="sl_Right"></View:Slider_Value>
+				<View:Slider_Value Text="Bottom:"				
+													 x:Name="sl_Bottom"></View:Slider_Value>
+				<Grid>
+					<TextBlock x:Name="tb_isvalid" HorizontalAlignment="Left"></TextBlock>
+					<Button Click="add_new_setup"
+									x:Name="btn_add_new_setup"
+									Content="Save"
+									BorderThickness="1.5"
+									Width="100"
+									Style="{StaticResource btn_Reset}"></Button>
+				</Grid>
+			</StackPanel>
+		</Border>
+		<Border>
+			<StackPanel>
+				<Grid x:Name="setup_view"
+							ButtonBase.Click="corner_part_selected"
+							Height="210"
+							Width="{Binding Width, ElementName=Main}">
+					<Grid.Resources>
+						<Style TargetType="{x:Type CheckBox}"
+									 BasedOn="{StaticResource chb_cornerSetup}"></Style>
+					</Grid.Resources>
+					<Grid.RowDefinitions>
+						<RowDefinition x:Name="setup_view_row" 
+													 MinHeight="15"
+													 Height="{Binding st.Corner_Distance, FallbackValue=15}"></RowDefinition>
+						<RowDefinition Height="*"></RowDefinition>
+						<RowDefinition Height="{Binding Height,ElementName=setup_view_row}"></RowDefinition>
+					</Grid.RowDefinitions>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="{Binding Height,ElementName=setup_view_row}"></ColumnDefinition>
+						<ColumnDefinition Width="*"></ColumnDefinition>
+						<ColumnDefinition Width="{Binding Height,ElementName=setup_view_row}"></ColumnDefinition>
+					</Grid.ColumnDefinitions>
+					<CheckBox Grid.Row="0"
+										Grid.Column="0" />
+					<CheckBox Grid.Row="0"
+										Grid.Column="2" />
+					<CheckBox Grid.Row="2"
+										Grid.Column="0" />
+					<CheckBox Grid.Row="2"
+										Grid.Column="2" />
+					<UniformGrid x:Name="Top"
+											 Rows="1"
+											 Grid.Row="0"
+											 Grid.Column="1">
+						<CheckBox />
+						<CheckBox />
+						<CheckBox />
+					</UniformGrid>
+					<UniformGrid x:Name="Bottom"
+											 Rows="1"
+											 Grid.Row="2"
+											 Grid.Column="1">
+						<CheckBox />
+						<CheckBox />
+						<CheckBox />
+					</UniformGrid>
+					<UniformGrid x:Name="Left"
+											 Columns="1"
+											 Grid.Row="1"
+											 Grid.Column="0">
+						<CheckBox />
+						<CheckBox />
+						<CheckBox />
+					</UniformGrid>
+					<UniformGrid x:Name="Right"
+											 Columns="1"
+											 Grid.Row="1"
+											 Grid.Column="2">
+						<CheckBox />
+						<CheckBox />
+						<CheckBox />
+					</UniformGrid>
+					<Canvas Grid.Row="1"
+									Grid.Column="1">
+						<Button x:Name="btn_preview"
+										DataContext="{Binding cs.Setup.Selected}"
+										Canvas.Left="{Binding _Left, FallbackValue=0}"
+										Canvas.Top="{Binding _Top, FallbackValue=0}"
+										Width="{Binding _Width, FallbackValue=305}"
+										Height="{Binding _Height, FallbackValue=165}"
+										Style="{StaticResource btn_demo_window}"
+										Content="Select A Corner Part" />
+					</Canvas>
+				</Grid>
+				<StackPanel x:Name="spn_part_info"
+										ToolTip="Corner part position and size"
+									 DataContext="{Binding cs.Setup.Selected}">
+					<StackPanel.Resources>
+						<Style TargetType="{x:Type View:Slider_Value}">
+							<Setter Property="Value"
+										Value="24"></Setter>
+							<Setter Property="Foreground"
+										Value="{Binding Foreground, ElementName=btn_preview}"></Setter>
+						</Style>
+					</StackPanel.Resources>
+					<View:Slider_Value Text="Left:"
+														 Value="{Binding Left, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></View:Slider_Value>
+					<View:Slider_Value Text="Top:"
+														 Value="{Binding Top, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></View:Slider_Value>
+					<View:Slider_Value Text="Width:"
+														 Value="{Binding Width, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></View:Slider_Value>
+					<View:Slider_Value Text="Height:"
+														 Value="{Binding Height, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"></View:Slider_Value>
+				</StackPanel>
+				<DockPanel LastChildFill="False" x:Name="dpn_btn">
+					<Button ToolTip="Insert new corner part"
+									Template="{StaticResource btn_Add}"
+									Click="add_part"
+									DockPanel.Dock="Right"></Button>
+					<Button ToolTip="Remove selected corner part"
+									Template="{StaticResource btn_Remove}"
+									Click="remove_part"
+									DockPanel.Dock="Right"></Button>
+					<Button ToolTip="Load default Horizontal setup"
+									Template="{StaticResource btn_Up}"
+									Click="load_default_setup"
+									DockPanel.Dock="Left"></Button>
+					<Button ToolTip="Load default Vertical setup"
+									Template="{StaticResource btn_Up}"
+									Click="load_default_setup"
+									DockPanel.Dock="Left"></Button>
+				</DockPanel>
+				<Button Command="{Binding st.RESET_CORNER_DISTANCE}"
+								Style="{StaticResource btn_Reset}"
+								
+                Effect="{Binding Effect, ElementName=sl_corner_distance, Mode=TwoWay}">
+					<TextBlock Style="{x:Null}">
+				    <Run Text="Corner Trigger Distance: "></Run>
+				    <Run Text="{Binding st.Corner_Distance, FallbackValue=10}" />
+				    <Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Corner_Distance, FallbackValue=10}"
+								ValueChanged="sl_corner_distance_ValueChanged"
+                x:Name="sl_corner_distance"></Slider>
+				<Button Command="{Binding st.RESET_CORNER_SENSITIVE}"
+								Style="{StaticResource btn_Reset}"
+                Effect="{Binding Effect, ElementName=sl_corner_sensitive, Mode=TwoWay}">
+					<TextBlock Style="{x:Null}">
+				    <Run Text="Corner Trigger Delay: "></Run>
+				    <Run Text="{Binding st.Corner_Sensitive,Converter={StaticResource mul}, ConverterParameter=10, FallbackValue=10}" />
+				    <Run Text="ms" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Corner_Sensitive, FallbackValue=10}"
+                        x:Name="sl_corner_sensitive"></Slider>
+			</StackPanel>
+		</Border>
+	</StackPanel>
+</UserControl>

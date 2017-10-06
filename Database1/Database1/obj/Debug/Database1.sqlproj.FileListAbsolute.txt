@@ -1,0 +1,9 @@
+F:\MyProgramBackup\2017.06.01\Database1\Database1\bin\Debug\Database1.dacpac
+F:\MyProgramBackup\2017.06.01\Database1\Database1\bin\Debug\Database1.dll
+F:\MyProgramBackup\2017.06.01\Database1\Database1\bin\Debug\Database1.pdb
+F:\MyProgramBackup\2017.06.01\Database1\Database1\obj\Debug\Model.xml
+F:\MyProgramBackup\2017.06.01\Database1\Database1\obj\Debug\refactor.xml
+F:\MyProgramBackup\2017.06.01\Database1\Database1\obj\Debug\postdeploy.sql
+F:\MyProgramBackup\2017.06.01\Database1\Database1\obj\Debug\predeploy.sql
+F:\MyProgramBackup\2017.06.01\Database1\Database1\obj\Debug\Database1.dll
+F:\MyProgramBackup\2017.06.01\Database1\Database1\obj\Debug\Database1.pdb

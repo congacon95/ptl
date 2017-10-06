@@ -1,0 +1,179 @@
+﻿<UserControl x:Class="PTL.View.MainWindow.WindowInfo"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+						 xmlns:local="clr-namespace:PTL.View.MainWindow"
+						 mc:Ignorable="d"
+						 d:DesignHeight="800"
+						 d:DesignWidth="300">
+	<StackPanel>
+		<ToggleButton x:Name="chb_info"
+									Content="{Binding l.chb_info, FallbackValue='SIZE'}"></ToggleButton>
+		<Border>
+			<StackPanel Visibility="{Binding IsChecked, ElementName=chb_info, Converter={StaticResource b2v}}">
+				<CheckBox IsChecked="{Binding st.IsTitle}"
+									Content="{Binding l.IsTitle, FallbackValue='Overlap title bar'}"></CheckBox>
+				<Button Command="{Binding st.RESET_SIZE_TOP}"
+								Visibility="{Binding st.IsTitle, Converter={StaticResource b2v}}">
+					<TextBlock>
+				<Run Text="Title Size: "></Run>
+				<Run Text="{Binding st.Size_Top, FallbackValue=26}" />
+				<Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Size_Top, FallbackValue=26}"
+								Visibility="{Binding st.IsTitle, Converter={StaticResource b2v}}"></Slider>
+				<Button Command="{Binding st.RESET_SIZE_APP_TOP}"
+								Visibility="{Binding st.IsTitle, Converter={StaticResource b2v}}">
+					<TextBlock>
+				<Run Text="App Title Size: "></Run>
+				<Run Text="{Binding st.Size_App_Top, FallbackValue=31}" />
+				<Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Size_App_Top, FallbackValue=31}"
+								Visibility="{Binding st.IsTitle, Converter={StaticResource b2v}}"
+								x:Name="sl_Title"
+								Maximum="50"
+								Minimum="-50"></Slider>
+				<CheckBox IsChecked="{Binding st.IsBorder}"
+									Content="{Binding l.IsBorder, FallbackValue='Overlap border'}"></CheckBox>
+				<CheckBox IsChecked="{Binding st.IsHideFullScreenAppBorder}"
+									Visibility="{Binding st.IsBorder, Converter={StaticResource b2v}}"
+									Content="{Binding l.IsHideFullScreenAppBorder, FallbackValue ='Hide border when fullscreen'}"></CheckBox>
+				<Button Command="{Binding st.RESET_SIZE_BORDER}"
+								Visibility="{Binding st.IsBorder, Converter={StaticResource b2v}}">
+					<TextBlock>
+				<Run Text="Border Size: "></Run>
+				<Run Text="{Binding st.Size_Border, FallbackValue=3}" />
+				<Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Size_Border , FallbackValue=3}"
+								Visibility="{Binding st.IsBorder, Converter={StaticResource b2v}}"
+								Maximum="{Binding Maximum, ElementName=sl_Title}"
+								Minimum="{Binding Minimum, ElementName=sl_Title}"></Slider>
+				<DockPanel Visibility="{Binding st.IsBorder, Converter={StaticResource b2v}}">
+					<Button Content="Reset  "
+									DockPanel.Dock="Right"
+									Command="{Binding st.BORDER_NORMAL}"></Button>
+					<Button Content="Minimize window's border"
+									Command="{Binding st.BORDER_THIN}"></Button>
+				</DockPanel>
+				<DockPanel>
+					<Button Content="Reset  "
+									DockPanel.Dock="Right"
+									Command="{Binding st.SCROLLBAR_NORMAL}"></Button>
+					<Button Content="Minimize scroll bar width"
+									Command="{Binding st.SCROLLBAR_THIN}"></Button>
+				</DockPanel>
+				<Button Content="More info"
+								HorizontalAlignment="Center"
+								Command="{Binding st.LAUNCH_URL}"></Button>
+				<CheckBox IsChecked="{Binding st.IsBottom}"
+									Content="{Binding l.IsBottom, FallbackValue='Overlap bottom'}"></CheckBox>
+				<Button Command="{Binding st.RESET_SIZE_BOTTOM}"
+								Visibility="{Binding st.IsBottom, Converter={StaticResource b2v}}">
+					<TextBlock>
+				<Run Text="Bottom Size: "></Run>
+				<Run Text="{Binding st.Size_Bottom, FallbackValue=0}" />
+				<Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Size_Bottom , FallbackValue=0}"
+								Visibility="{Binding st.IsBottom, Converter={StaticResource b2v}}"
+								Maximum="{Binding Maximum, ElementName=sl_Title}"
+								Minimum="{Binding Minimum, ElementName=sl_Title}"></Slider>
+			</StackPanel>
+		</Border>
+		<!--<ToggleButton x:Name="chb_Title"
+									Content="{Binding l.Title, FallbackValue='TITLE'}"></ToggleButton>
+		<Border>
+			<StackPanel Visibility="{Binding IsChecked, ElementName=chb_Title, Converter={StaticResource b2v}}">
+				<CheckBox IsChecked="{Binding st.IsTitle}"
+									Content="{Binding l.IsTitle, FallbackValue='Overlap title bar'}"></CheckBox>
+				<Button Command="{Binding st.RESET_SIZE_TOP}"
+								Visibility="{Binding st.IsTitle, Converter={StaticResource b2v}}">
+					<TextBlock>
+				<Run Text="Title Size: "></Run>
+				<Run Text="{Binding st.Size_Top, FallbackValue=26}" />
+				<Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Size_Top, FallbackValue=26}"
+								Visibility="{Binding st.IsTitle, Converter={StaticResource b2v}}"></Slider>
+				<Button Command="{Binding st.RESET_SIZE_APP_TOP}"
+								Visibility="{Binding st.IsTitle, Converter={StaticResource b2v}}">
+					<TextBlock>
+				<Run Text="App Title Size: "></Run>
+				<Run Text="{Binding st.Size_App_Top, FallbackValue=31}" />
+				<Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Size_App_Top, FallbackValue=31}"
+								Visibility="{Binding st.IsTitle, Converter={StaticResource b2v}}"
+								x:Name="sl_Title"
+								Maximum="50"
+								Minimum="-50"></Slider>
+			</StackPanel>
+		</Border>-->
+		<!--<ToggleButton x:Name="chb_Border"
+									Content="{Binding l.Border, FallbackValue='BORDER'}"></ToggleButton>
+		<Border>
+			<StackPanel Visibility="{Binding IsChecked, ElementName=chb_Border, Converter={StaticResource b2v}}">
+				<CheckBox IsChecked="{Binding st.IsBorder}"
+									Content="{Binding l.IsBorder, FallbackValue='Overlap border'}"></CheckBox>
+				<CheckBox IsChecked="{Binding st.IsHideFullScreenAppBorder}"
+									Visibility="{Binding st.IsBorder, Converter={StaticResource b2v}}"
+									Content="{Binding l.IsHideFullScreenAppBorder, FallbackValue ='Hide border when fullscreen'}"></CheckBox>
+				<Button Command="{Binding st.RESET_SIZE_BORDER}"
+								Visibility="{Binding st.IsBorder, Converter={StaticResource b2v}}">
+					<TextBlock>
+				<Run Text="Border Size: "></Run>
+				<Run Text="{Binding st.Size_Border, FallbackValue=3}" />
+				<Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Size_Border , FallbackValue=3}"
+								Visibility="{Binding st.IsBorder, Converter={StaticResource b2v}}"
+								Maximum="{Binding Maximum, ElementName=sl_Title}"
+								Minimum="{Binding Minimum, ElementName=sl_Title}"></Slider>
+				<DockPanel Visibility="{Binding st.IsBorder, Converter={StaticResource b2v}}">
+					<Button Content="Reset  "
+									DockPanel.Dock="Right"
+									Command="{Binding st.BORDER_NORMAL}"></Button>
+					<Button Content="Minimize window's border"
+									Command="{Binding st.BORDER_THIN}"></Button>
+				</DockPanel>
+			</StackPanel>
+		</Border>-->
+		<!--<ToggleButton x:Name="chb_Bottom"
+									Content="{Binding l.Bottom, FallbackValue='BOTTOM'}"></ToggleButton>
+		<Border>
+			<StackPanel Visibility="{Binding IsChecked, ElementName=chb_Bottom, Converter={StaticResource b2v}}">
+				<CheckBox IsChecked="{Binding st.IsBottom}"
+									Content="{Binding l.IsBottom, FallbackValue='Overlap bottom'}"></CheckBox>
+				<Button Command="{Binding st.RESET_SIZE_BOTTOM}"
+								Visibility="{Binding st.IsBottom, Converter={StaticResource b2v}}">
+					<TextBlock>
+				<Run Text="Bottom Size: "></Run>
+				<Run Text="{Binding st.Size_Bottom, FallbackValue=0}" />
+				<Run Text="px" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Size_Bottom , FallbackValue=0}"
+								Visibility="{Binding st.IsBottom, Converter={StaticResource b2v}}"
+								Maximum="{Binding Maximum, ElementName=sl_Title}"
+								Minimum="{Binding Minimum, ElementName=sl_Title}"></Slider>
+			</StackPanel>
+		</Border>
+		<ToggleButton x:Name="chb_Scrollbar"
+									Content="{Binding l.Scrollbar, FallbackValue='SCROLL BAR'}"></ToggleButton>
+		<Border>
+			<StackPanel Visibility="{Binding IsChecked, ElementName=chb_Scrollbar, Converter={StaticResource b2v}}">
+				<DockPanel>
+					<Button Content="Reset  "
+									DockPanel.Dock="Right"
+									Command="{Binding st.SCROLLBAR_NORMAL}"></Button>
+					<Button Content="Minimize scroll bar width"
+									Command="{Binding st.SCROLLBAR_THIN}"></Button>
+				</DockPanel>
+				<Button Content="More info"
+								Command="{Binding st.LAUNCH_URL}"></Button>
+			</StackPanel>
+		</Border>-->
+	</StackPanel>
+</UserControl>

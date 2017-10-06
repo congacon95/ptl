@@ -1,0 +1,128 @@
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+				xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+				xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+				xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+				xmlns:Views="clr-namespace:PTL.View.MainWindow"
+				x:Class="PTL.MainWindow"
+				mc:Ignorable="d"
+				Title="MainWindow"
+				x:Name="Window_Main"
+				MinWidth="360"
+				MinHeight="360"
+				Left="1560"
+				Top="30"
+				Width="360"
+				Height="5000"
+				AllowsTransparency="True"
+				WindowStyle="None"
+				Topmost="True"
+				Background="Transparent"
+				Icon="/PTL;component/Resources/NotifyIcon_On.ico">
+	<!--SizeChanged="Window_Main_SizeChanged"-->
+	<StackPanel x:Name="root">
+		<StackPanel.Background>
+			<SolidColorBrush Color="Black"
+											 Opacity="{Binding st.Opacity_Main, FallbackValue=0.3}"></SolidColorBrush>
+		</StackPanel.Background>
+		<StackPanel.Resources>
+			<Style BasedOn="{StaticResource tgb_menu}"
+						 TargetType="{x:Type ToggleButton}"></Style>
+			<Style BasedOn="{StaticResource tb_ruleList}"
+						 TargetType="{x:Type TextBox}"></Style>
+			<Style BasedOn="{StaticResource tb_content}"
+						 TargetType="{x:Type TextBlock}"></Style>
+			<Style BasedOn="{StaticResource btn_Reset}"
+						 TargetType="{x:Type Button}"></Style>
+			<Style BasedOn="{StaticResource bd_round}"
+						 TargetType="{x:Type Border}"></Style>
+			<Style BasedOn="{StaticResource chb_switch}"
+						 TargetType="{x:Type CheckBox}"></Style>
+			<Style BasedOn="{StaticResource sl_default}"
+						 TargetType="{x:Type Slider}"></Style>
+			<Style BasedOn="{StaticResource tt_default}"
+						 TargetType="{x:Type ToolTip}"></Style>
+		</StackPanel.Resources>
+		<DockPanel x:Name="nav"
+							 Margin="5"
+							 LastChildFill="True">
+			<DockPanel.Resources>
+				<Style TargetType="{x:Type Button}"
+							 BasedOn="{StaticResource BaseStyle}">
+					<Setter Property="Background"
+									Value="{StaticResource dark24}"></Setter>
+					<Setter Property="Effect"
+									Value="{StaticResource dropBlue}"></Setter>
+				</Style>
+			</DockPanel.Resources>
+			<Button DockPanel.Dock="Right"
+							ToolTip="EXIT"
+							Command="{Binding st.EXIT}"
+							Effect="{StaticResource dropRed}"
+							Template="{StaticResource btn_exit}"
+							Foreground="Red">
+			</Button>
+			<Button DockPanel.Dock="Right"
+							ToolTip="Normal/Wide"
+							Command="{Binding st.RESIZE}"
+							Template="{StaticResource btn_maximize}" />
+			<Button DockPanel.Dock="Right"
+							ToolTip="Minimize"
+							Command="{Binding st.MINIMIZE}"
+							Template="{StaticResource btn_Remove}" />
+			<Button x:Name="label_main"
+						 Content="PTL 2017"
+							Style="{StaticResource btn_Reset}"></Button>
+			<CheckBox IsChecked="{Binding st.IsOn}"></CheckBox>
+		</DockPanel>
+		<StackPanel x:Name="menu"
+								Orientation="Horizontal"
+								Panel.ZIndex="1"
+								ButtonBase.Click='menu_Click'
+								Margin="{Binding ElementName=nav, Path=Margin}">
+			<StackPanel.Resources>
+				<Style BasedOn="{StaticResource chb_nav}"
+							 TargetType="{x:Type CheckBox}"></Style>
+			</StackPanel.Resources>
+			<CheckBox ToolTip="SETTING"
+								Template="{StaticResource btn_Settings}"></CheckBox>
+			<CheckBox ToolTip="MOUSE INPUT"
+								Template="{StaticResource btn_MouseEvent}"></CheckBox>
+			<CheckBox ToolTip="WINDOW  SIZE"
+								Template="{StaticResource btn_WindowInfo}"></CheckBox>
+			<CheckBox ToolTip="CORNER SETUP"
+								Template="{StaticResource btn_Display}"></CheckBox>
+			<CheckBox ToolTip="FILTER RULE"
+								Template="{StaticResource btn_RuleList}"></CheckBox>
+			<CheckBox ToolTip="KEYBOARD INPUT"
+								Template="{StaticResource btn_KeyEvent}"></CheckBox>
+			<CheckBox ToolTip="ABOUT AND CONTACT"
+								Template="{StaticResource btn_About}"></CheckBox>
+		</StackPanel>
+		<!--<Grid x:Name="demo"
+					Height="210"
+					Width="360"
+					Margin="{Binding ElementName=menu, Path=Margin}">
+			<Grid.Resources></Grid.Resources>
+			<Button x:Name="demo_Screen"
+							Style="{StaticResource ScreenDemo}"
+							Width="{Binding Width, ElementName=Window_Main}"></Button>
+			<Grid x:Name="demo_Window">
+				<Button Style="{StaticResource btn_demo_window}"></Button>
+			</Grid>
+		</Grid>-->
+		<ScrollViewer x:Name="sv_content"
+									VerticalScrollBarVisibility="Hidden"
+									HorizontalScrollBarVisibility="Hidden"
+									Margin="{Binding ElementName=nav, Path=Margin}">
+			<StackPanel x:Name="content">
+				<Views:Settings></Views:Settings>
+				<Views:Mouse></Views:Mouse>
+				<Views:WindowInfo></Views:WindowInfo>
+				<Views:CornerSetups></Views:CornerSetups>
+				<Views:Rules></Views:Rules>
+				<Views:Keyboard></Views:Keyboard>
+				<Views:About></Views:About>
+			</StackPanel>
+		</ScrollViewer>
+	</StackPanel>
+</Window>

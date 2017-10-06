@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="PTL.View.MainWindow.Keyboard"
+						 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+						 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+						 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+						 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+						 xmlns:local="clr-namespace:PTL.View.MainWindow"
+						 mc:Ignorable="d"
+						 d:DesignHeight="300"
+						 d:DesignWidth="300">
+	<StackPanel>
+		<ToggleButton x:Name="chb_Numpad"
+									Content="{Binding l.Numpad, FallbackValue='NUMPAD'}"></ToggleButton>
+		<Border>
+			<StackPanel Visibility="{Binding IsChecked, ElementName=chb_Numpad, Converter={StaticResource b2v}}">
+				<CheckBox Content="Use numpad to move and resize"
+									IsChecked="{Binding st.IsNumpad}" />
+				<CheckBox Content="Move window across screens"
+									IsChecked="{Binding st.IsNumpadSwitchScreen}" />
+				<CheckBox Content="Block numpad text input"
+									IsChecked="{Binding st.IsNumpadBlockInput}" />
+				<CheckBox Content="Disable when Ctrl is down"
+									IsChecked="{Binding st.IsNumpadCtrlToDisable}" />
+				<CheckBox Content="Enable only when Ctrl is down"
+									IsChecked="{Binding st.IsNumpadCtrlToEnable}" />
+				<Button Command="{Binding st.RESET_INTERVAL_NUMPAD}">
+					<TextBlock>
+				<Run Text="Accept keyboard input every: " />
+				<Run Text="{Binding st.Interval_Numpad, ConverterParameter=10, Converter={StaticResource mul}, FallbackValue=100}" />
+				<Run Text="ms" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.Interval_Numpad, FallbackValue=10}"
+								Maximum="100" />
+				<Button>
+					<TextBlock>
+				<Run Text="/* key additional width: " />
+				<Run Text="{Binding st.AddedWidth, FallbackValue=1}" />
+				<Run Text="column(s)" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.AddedWidth, FallbackValue=1}"
+								Maximum="5"
+								Minimum="-5" />
+				<Button>
+					<TextBlock><Run Text="+- key additional height: " />
+				<Run Text="{Binding st.AddedHeight, FallbackValue=1}" />
+				<Run Text="row(s)" /></TextBlock>
+				</Button>
+				<Slider Value="{Binding st.AddedHeight,FallbackValue=1}"
+								Maximum="5"
+								Minimum="-5" />
+			</StackPanel>
+		</Border>
+		<ToggleButton x:Name="chb_Arrow"
+									Content="{Binding l.Arrow, FallbackValue='ARROW'}"></ToggleButton>
+		<Border>
+			<StackPanel Visibility="{Binding IsChecked, ElementName=chb_Arrow, Converter={StaticResource b2v}}">
+				<CheckBox Content="Use arrow key to move window"
+									IsChecked="{Binding st.IsArrowKey}" />
+				<CheckBox Content="Block Key input"
+									IsChecked="{Binding st.IsArrowBlockInput}" />
+				<CheckBox Content="Disable when Ctrl is down"
+									IsChecked="{Binding st.IsArrowCtrlToDisable}" />
+				<CheckBox Content="Enable only when Ctrl is down"
+									IsChecked="{Binding st.IsArrowCtrlToEnable}" />
+				<Button>
+					<TextBlock>
+				<Run Text="Horizontal Step:" />
+				<Run Text="{Binding st.AddedX, FallbackValue=1}" />
+				<Run Text="column(s)" /></TextBlock>
+				</Button>
+				<Slider Maximum="5"
+								Minimum="-5"
+								Value="{Binding st.AddedX}" />
+				<Button>
+					<TextBlock><Run Text="Vertical Step:" />
+				<Run Text="{Binding st.AddedY, FallbackValue=1}" />
+				<Run Text="row(s)" /></TextBlock>
+				</Button>
+				<Slider Maximum="5"
+								Minimum="-5"
+								Value="{Binding st.AddedY}" />
+			</StackPanel>
+		</Border>
+	</StackPanel>
+</UserControl>
